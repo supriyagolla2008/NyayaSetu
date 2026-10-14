@@ -1,0 +1,54 @@
+services:
+  postgres:
+    image: pgvector/pgvector:pg16
+    container_name: rightsflow-db
+    environment:
+      POSTGRES_DB: rightsflow
+      POSTGRES_USER: rightsflow
+      POSTGRES_PASSWORD: rightsflow_secret
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U rightsflow"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: rightsflow-backend
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/rightsflow
+      SPRING_DATASOURCE_USERNAME: rightsflow
+      SPRING_DATASOURCE_PASSWORD: rightsflow_secret
+      JWT_SECRET: your-256-bit-secret-key-change-this-in-production-minimum-32-chars
+      AI_PROVIDER: demo
+      AI_API_KEY: ""
+      AI_MODEL: gpt-4o-mini
+      EMBEDDING_MODEL: text-embedding-3-small
+      FILE_STORAGE_PATH: /app/uploads
+    ports:
+      - "8080:8080"
+    depends_on:
+      postgres:
+        condition: service_healthy
+    volumes:
+      - uploads:/app/uploads
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: rightsflow-frontend
+    ports:
+      - "5173:80"
+    depends_on:
+      - backend
+
+volumes:
+  pgdata:
+  uploads:

@@ -1,0 +1,55 @@
+# Environment
+.env
+*.env.local
+
+# Java / Maven
+backend/target/
+*.class
+*.jar
+*.war
+*.ear
+*.log
+.mvn/
+!.mvn/wrapper/
+
+# Node / Frontend
+frontend/node_modules/
+frontend/dist/
+frontend/.cache/
+*.tsbuildinfo
+
+# IDE
+.idea/
+*.iml
+.vscode/
+*.swp
+*.swo
+*~
+.DS_Store
+
+# Uploads
+uploads/
+
+# Docker
+*.pid
+
+# Test
+backend/test-output/
+*.hprof
+
+# OS
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+.env
+.env.*
+!.env.example
+node_modules/
+target/
+__pycache__/
+*.class
+*.log
+.DS_Store
+tools/apache-maven-3.9.9/
+tools/
+tools/

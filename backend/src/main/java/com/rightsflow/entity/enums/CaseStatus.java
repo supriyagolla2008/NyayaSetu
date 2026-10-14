@@ -1,0 +1,5 @@
+package com.rightsflow.entity.enums;
+
+public enum CaseStatus {
+    CREATED, INFORMATION_REVIEWED, DOCUMENTS_PENDING, READY_FOR_ACTION, ACTION_TAKEN, SUBMITTED, UNDER_REVIEW, RESOLVED, CLOSED
+}
